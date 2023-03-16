@@ -18,9 +18,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="bg-gray-800 h-screen">
+      <div className="bg-gray-800">
         <Header />
-        <main className="container m-auto h-full">
+        <main className="container m-auto h-screen">
           <div className="flex h-full items-center content-center">
             <div className="w-full
             p-6 bg-white border border-gray-200 rounded-lg shadow">
