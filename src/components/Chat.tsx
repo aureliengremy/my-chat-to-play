@@ -1,9 +1,68 @@
-import React from "react";
-import {UserRick, UserButter} from '@/common/ImgVariable'
+import React, { useState } from "react";
+import { UserRick, UserButter } from "@/common/ImgVariable";
 
 type Props = {};
 
+const token = process.env.OPENAI_TOKEN;
+
+// const fetchData = async (input: string) => {
+//     const response = await axios.post(
+//       "https://api.openai.com/v1/completions",
+//       {
+//         prompt: `"${input}"`,
+//         model: 'text-davinci-002',
+//         max_tokens: 50,
+//         n: 1,
+//         stop: ".",
+//       },
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Bearer ${token}`,
+//         },
+//       }
+//     );
+//   console.log(response.data.choices[0].text)
+//     return response.data.choices[0].text;
+//   };
+
 const Chat = (props: Props) => {
+  const [input, setInput] = useState("");
+  const [completedSentence, setCompletedSentence] = useState("");
+
+  async function handleClick() {
+    try {
+      setCompletedSentence(await fetchData(input));
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const fetchData = async (input: string) => {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        prompt: `Complete this sentence: "${input}"`,
+        model: "text-davinci-002",
+        max_tokens: 50,
+        n: 1,
+        stop: ".",
+      }),
+    };
+
+    const response = await fetch(
+      "https://api.openai.com/v1/completions",
+      requestOptions
+    );
+    const data = await response.json();
+
+    return data.choices[0].text;
+  };
+
   return (
     <>
       <div className="userMsg">
@@ -17,7 +76,7 @@ const Chat = (props: Props) => {
           />
           <div>
             <div className="text-sm bg-white text-slate-800 p-3 rounded-lg rounded-tl-none border border-slate-200 shadow-md mb-1">
-              Can anyone help? I have a question about Acme Professional
+              Ask your question, bitch!
             </div>
             <div className="flex items-center justify-between">
               <div className="text-xs text-slate-500 font-medium">2:40 PM</div>
@@ -36,10 +95,7 @@ const Chat = (props: Props) => {
           />
           <div>
             <div className="text-sm bg-indigo-500 text-white p-3 rounded-lg rounded-tl-none border border-transparent shadow-md mb-1">
-              Hey Dominik Lamakani 👋
-              <br />
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt mollit anim id est 🙌
+            {completedSentence && completedSentence}
             </div>
             <div className="flex items-center justify-between">
               <div className="text-xs text-slate-500 font-medium">2:40 PM</div>
@@ -105,6 +161,40 @@ const Chat = (props: Props) => {
               </circle>
             </svg>
           </div>
+        </div>
+      </div>
+      <div className="sticky bottom-0">
+        <div className="flex items-center justify-between bg-white border-t border-slate-200 px-4 sm:px-6 md:px-5 h-16">
+          {/* Plus button */}
+          <button className="shrink-0 text-slate-400 hover:text-slate-500 mr-3">
+            <span className="sr-only">Add</span>
+            <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12C23.98 5.38 18.62.02 12 0zm6 13h-5v5h-2v-5H6v-2h5V6h2v5h5v2z" />
+            </svg>
+          </button>
+          {/* Message input */}
+          <form className="grow flex">
+            <div className="grow mr-3">
+              <label htmlFor="message-input" className="sr-only">
+                Type a message
+              </label>
+              <input
+                id="message-input"
+                className="form-input w-full bg-slate-100 border-transparent focus:bg-white focus:border-slate-300"
+                type="text"
+                placeholder="Aa"
+                value={input}
+                onChange={(event) => setInput(event.target.value)}
+              />
+            </div>
+            <button
+              onClick={handleClick}
+              type="submit"
+              className="btn bg-indigo-500 hover:bg-indigo-600 text-white whitespace-nowrap"
+            >
+              Send -&gt;
+            </button>
+          </form>
         </div>
       </div>
     </>
