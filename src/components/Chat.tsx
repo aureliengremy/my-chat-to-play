@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { UserRick, UserButter } from "@/common/ImgVariable";
-import fetchData from "@/utils/fetchData";
+import fetchData from "@/utils/fetchOpenAi";
 
 type Props = {
   
@@ -14,7 +14,8 @@ const Chat = () => {
   async function handleClick(event: any) {
     event.preventDefault()
     try {
-      setCompletedSentence(await fetchData(input));
+        console.log(await fetchData(input));
+    //   setCompletedSentence(await fetchData(input));
     } catch (error) {
       console.error(error);
     }

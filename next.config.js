@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    OPENAI_TOKEN: process.env.OPENAI_TOKEN,
+    NEXT_PUBLIC_OPENAI_TOKEN: process.env.NEXT_PUBLIC_OPENAI_TOKEN,
    },
 }
 
