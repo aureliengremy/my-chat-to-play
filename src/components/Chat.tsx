@@ -2,24 +2,20 @@ import React, { useState } from "react";
 import { UserRick, UserButter } from "@/common/ImgVariable";
 import fetchData from "@/utils/fetchOpenAi";
 
-type Props = {
-  
-};
-
+type Props = {};
 
 const Chat = () => {
   const [input, setInput] = useState("");
   const [completedSentence, setCompletedSentence] = useState("");
 
-  async function handleClick(event: any) {
-    event.preventDefault()
+  const handleClick = async (event: any) => {
+    event.preventDefault();
     try {
-        console.log(await fetchData(input));
-    //   setCompletedSentence(await fetchData(input));
+      setCompletedSentence(await fetchData(input));
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <>
@@ -53,7 +49,7 @@ const Chat = () => {
           />
           <div>
             <div className="text-sm bg-indigo-500 text-white p-3 rounded-lg rounded-tl-none border border-transparent shadow-md mb-1">
-            {completedSentence && completedSentence}
+              {completedSentence && completedSentence}
             </div>
             <div className="flex items-center justify-between">
               <div className="text-xs text-slate-500 font-medium">2:40 PM</div>

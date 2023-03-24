@@ -8,8 +8,6 @@ type Props = {
 // dotenv.config()
 const TOKEN = process.env.NEXT_PUBLIC_OPENAI_TOKEN;
 
-
-
  const fetchData = async (input: Props) => {
     const requestOptions = {
       method: "POST",
@@ -34,9 +32,10 @@ const TOKEN = process.env.NEXT_PUBLIC_OPENAI_TOKEN;
       requestOptions
     );
     const data = await response.json();
-      console.log(data);
-    return data.choices[0].text;
+      // console.log(data);
+    return data.choices[0].message.content;
   };
+  
 export default fetchData
 
 
